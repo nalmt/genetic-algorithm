@@ -16,7 +16,7 @@ a = check_list(STUDENT_ID, ["ALGOGEN", "PASSWORD"])
 
 print(a)
 
-Génération aléatoire d'une population
+#Génération aléatoire d'une population
 
 population = generate_population()
 
