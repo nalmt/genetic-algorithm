@@ -3,6 +3,12 @@
 #import demo
 import subprocess
 import random
+import string
+
+alphabets = list(string.ascii_uppercase)
+numbers = list(range(10))
+mutateProbabity = 0.2
+addDeleteProbabilty = 0.2
 
 STUDENT_ID = 11806768
 
@@ -47,7 +53,7 @@ def exploitation():
         population.add(cross)
 
 # TODO : exploration
-#  faire muter premier parent et l'ajouter
+#  faire muterpremier parent et l'ajouter
 #  faire muter deuxième parent et l'ajouter
 def exploitation(parent1, parent2):
     mutate(parent1)
@@ -61,11 +67,44 @@ def exploitation(parent1, parent2):
     if len(population) == len(newPopulation):
         population = newPopulation
 
-def mutate(parent):
-    # TODO
+def deleteGene(genotype, genePosition):
+    if len(genotype) >= 13:
+        genotype.replace(genePosition, '')
+
+def addGene(genotype):
+    if len(genotype) <= 17:
+        genotype.join(random.choice(alphabets))
+
+def mutate(gene):
+    if gene in alphabets:
+        indexAlpha = alphabets.index(gene)
+        if indexAlpha not in [0, 25]:
+            return random.choice(alphabets[indexAlpha+1],alphabets[indexAlpha-1])
+    elif gene in numbers:
+        indexNum = numbers.index(gene)
+        if indexNum not in [0, 9]:
+            return random.choice(numbers[indexNum + 1], numbers[indexNum - 1])
+
+def mutateGenotype(genotype):
+  for gene in genotype:
+     indexGene = genotype.index(gene)
+     if random() < mutateProbabity:
+        genotype.replace(indexGene,mutate(gene))
+     if random() < addDeleteProbabilty:
+        deleteIndex = random.uniform(0, len(genotype) - 1)
+        random.choice(addGene(genotype), deleteGene(genotype, deleteIndex))
+
+
+
+
+
+
+
+#Ensuite on a une probabilité de supprimer un gène au hasard et une probabilité d'ajouter un gène au hasard (ces types de mutations s'appliquent uniquement si nous avons 13 à 17 gènes inclus).
+
 
 def crossover(parent1, parent2):
-    # TODO
+    #TODO
 
 # Génération aléatoire d'une population
 population = generatePopulation()
