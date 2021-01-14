@@ -67,32 +67,60 @@ def exploitation(parent1, parent2):
     if len(population) == len(newPopulation):
         population = newPopulation
 
-def deleteGene(genotype, genePosition):
+
+def deleteGene(geneIndex, genotype):
     if len(genotype) >= 13:
-        genotype.replace(genePosition, '')
+        genotype = genotype[:geneIndex] + genotype[geneIndex + 1:]
+
+
 
 def addGene(genotype):
     if len(genotype) <= 17:
         genotype.join(random.choice(alphabets))
 
+
+
 def mutate(gene):
     if gene in alphabets:
         indexAlpha = alphabets.index(gene)
         if indexAlpha not in [0, 25]:
-            return random.choice(alphabets[indexAlpha+1],alphabets[indexAlpha-1])
+            rand = random.choice([1, 2])
+            if rand == 1:
+                return alphabets[indexAlpha + 1]
+            else:
+                return alphabets[indexAlpha - 1]
+        else:
+            return gene
     elif gene in numbers:
         indexNum = numbers.index(gene)
         if indexNum not in [0, 9]:
-            return random.choice(numbers[indexNum + 1], numbers[indexNum - 1])
+            rand = random.choice([1, 2])
+            if rand == 1:
+                return numbers[indexNum + 1]
+            else:
+                return numbers[indexNum - 1]
+
+        else:
+            return gene
+
 
 def mutateGenotype(genotype):
-  for gene in genotype:
-     indexGene = genotype.index(gene)
-     if random() < mutateProbabity:
-        genotype.replace(indexGene,mutate(gene))
-     if random() < addDeleteProbabilty:
-        deleteIndex = random.uniform(0, len(genotype) - 1)
-        random.choice(addGene(genotype), deleteGene(genotype, deleteIndex))
+    for geneIndex in range(0, len(genotype) - 1):
+        gene = genotype[geneIndex]
+
+
+        if random.random() < mutateProbabity:
+            newGene = mutate(gene)
+            genotype = genotype[:geneIndex] + str(newGene) + genotype[geneIndex + 1:]
+
+
+        if random.random() < addDeleteProbabilty:
+            deleteIndex = random.randrange(0, len(genotype) - 1, 1)
+            rand = random.choice([1, 2])
+            if rand == 1:
+                addGene(genotype)
+            else:
+                deleteGene(deleteIndex, genotype)
 
 
 
