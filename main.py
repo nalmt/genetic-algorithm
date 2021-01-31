@@ -8,11 +8,11 @@ from mutation import *
 from roulette import *
 
 STUDENT_ID = 11806768
-POPULATION_SIZE = 120
+POPULATION_SIZE = 200
 CROSSOVER_PROBABILITY = 0.2
 
 def check_list(student, list_password):
-    proc = subprocess.Popen(["./unlock", str(student)] + list_password, stdout=subprocess.PIPE)
+    proc = subprocess.Popen(["./unlock_mac", str(student)] + list_password, stdout=subprocess.PIPE)
     results = []
     while True:
         line = proc.stdout.readline()
