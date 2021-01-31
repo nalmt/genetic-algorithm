@@ -1,14 +1,12 @@
 # coding : utf8
 # !/usr/bin/env python
 import subprocess
-import random
-import string
 from crossover import *
 from mutation import *
 from roulette import *
 
 STUDENT_ID = 11806768
-POPULATION_SIZE = 15
+POPULATION_SIZE = 200
 CROSSOVER_PROBABILITY = 0.2
 
 def check_list(student, list_password):
@@ -36,12 +34,31 @@ def randomly_generate_population(population_size):
 
 population = randomly_generate_population(POPULATION_SIZE)
 
+def elitisme(population, n):
+    weights = check_list(STUDENT_ID, population)
+    weights = sorted(weights)
+    elites = []
+    for i in range(n):
+        indexbestfitness = weights[i]
+        bestindividual = population[int(indexbestfitness)]
+        elites.append(bestindividual)
+
+    return elites
+
+
+
+
+
 while 1 not in check_list(STUDENT_ID, population):
     weights = check_list(STUDENT_ID, population)
-
-    print(max(weights))
-
     newPopulation = []
+    bestfitness= max(weights)
+
+    print(bestfitness)
+
+    newPopulation.extend(elitisme(population, 2))
+
+
 
     while len(newPopulation) < POPULATION_SIZE:
         person_1, person_2 = roulette_wheel_by_exponential_rank_sampled(population, weights, 2, 0.35)
