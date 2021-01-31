@@ -37,6 +37,31 @@ def roulette_wheel(population, number_to_select):
     weights = check_list(STUDENT_ID, population)
     return random.choices(population, weights, k=number_to_select)
 
+def sortSecond(val):
+    return val[1]
+
+def roulette_wheel_by_linear_rank(population, number_to_select):
+    weights = check_list(STUDENT_ID, population)
+
+    population_sorted_by_score = []
+    for i in range(0, len(population)):
+        population_sorted_by_score.append([population[i], weights[i]])
+
+    population_sorted_by_score.sort(key = sortSecond)
+
+    weights_by_rank = []
+    N = len(population_sorted_by_score)
+
+    for i in range(0, N):
+        r = i+1
+        w = (2/(N * (N - 1))) * (r - 1)
+        weights_by_rank.append(w)
+
+    new_population = [item[0] for item in population_sorted_by_score]
+
+    return random.choices(new_population, weights_by_rank, k=number_to_select)
+
+
 # Génération aléatoire d'une population
 population = generatePopulation(POPULATION_SIZE)
 
