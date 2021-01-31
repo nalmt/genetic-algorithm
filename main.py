@@ -8,6 +8,8 @@ from roulette import *
 STUDENT_ID = 11806768
 POPULATION_SIZE = 200
 CROSSOVER_PROBABILITY = 0.2
+MUTATE_PROBABILITY = 0.5
+ADD_DELETE_PROBABILITY = 0.2
 
 def check_list(student, list_password):
     proc = subprocess.Popen(["./unlock_mac", str(student)] + list_password, stdout=subprocess.PIPE)
@@ -68,8 +70,8 @@ while 1 not in check_list(STUDENT_ID, population):
             person_3, person_4 = random_crossover(person_1, person_2, 8)
             newPopulation.extend([person_3, person_4])
 
-        person_5 = mutateGenotype(person_1)
-        person_6 = mutateGenotype(person_2)
+        person_5 = mutateGenotype(person_1, MUTATE_PROBABILITY, ADD_DELETE_PROBABILITY)
+        person_6 = mutateGenotype(person_2, MUTATE_PROBABILITY, ADD_DELETE_PROBABILITY)
         newPopulation.extend([person_5, person_6])
 
     population = newPopulation
