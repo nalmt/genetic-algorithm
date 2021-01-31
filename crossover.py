@@ -1,6 +1,5 @@
 # coding : utf8
 # !/usr/bin/env python
-
 import random
 import unittest
 
@@ -236,5 +235,5 @@ class TestExchangeGenes(unittest.TestCase):
         self.assertEqual(child_1, "ABCDE1GH2JKLM")
         self.assertEqual(child_2, "MNO7QRS5UVWXN")
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+    # unittest.main()
