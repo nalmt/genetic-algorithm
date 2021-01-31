@@ -10,9 +10,13 @@ from roulette import *
 STUDENT_ID = 11806768
 POPULATION_SIZE = 200
 CROSSOVER_PROBABILITY = 0.2
+device = 'mac'
 
 def check_list(student, list_password):
-    proc = subprocess.Popen(["./unlock_mac", str(student)] + list_password, stdout=subprocess.PIPE)
+    if device == 'mac':
+        proc = subprocess.Popen(["./unlock_mac", str(student)] + list_password, stdout=subprocess.PIPE)
+    else:
+        proc = subprocess.Popen(["./unlock", str(student)] + list_password, stdout=subprocess.PIPE)
     results = []
     while True:
         line = proc.stdout.readline()

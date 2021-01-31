@@ -75,13 +75,15 @@ On ajoute ensuite les deux individus de la population précédente ayant les mei
 
 Nous avons modifié notre algorithme d'origine. Notre nouvel algorithme se compose en deux parties. Dans un premier temps la diversité est le point central, après que la diversité a bien été exploitée, on travail sur les meilleurs individus.
 
-Dans un premier temps, l'objectif est de déceler rapidement les populations qui ont du potentielles de celles qui n'en n'ont pas. On va donc générer aléatoirement une population et lui donner un petit nombre de générations (80 générations). Si cette population n'atteint pas un certain seuil d'intérêt elle est abandonnée (mais si le seuil est atteint elle est conservée pour la suite) et on recommence en générant une nouvelle population aléatoirement. 
+Dans un premier temps, l'objectif est de déceler rapidement les populations qui ont du potentielles de celles qui n'en n'ont pas.
+On va donc générer aléatoirement une population et lui donner un petit nombre de générations (80 générations). Si cette population n'atteint pas un certain seuil d'intérêt elle est abandonnée (mais si le seuil est atteint elle est conservée pour la suite) et on recommence en générant une nouvelle population aléatoirement. 
 
 Nous considérons qu'une population dont le meilleur individu ayant un score inférieur à 85% doit être abandonnée.
 
 On réitère les étapes précédentes jusqu'à avoir 10 à 20 populations intéressantes.
 
-Derrière cette méthode, il y a l'intuition que les meilleurs individus de ces différentes populations sont très proches de la solution mais de façons différentes (elles ne le sont pas pour les même raisons, elles ont donc chacune un point fort à exploiter, l'objectif désormais est d'utiliser les crossover en espérant avoir le meilleur de chaque population). On pense qu'à ce stade, la solution est une combinaison de l'ensemble de ces individus.
+Derrière cette méthode, il y a l'intuition que les meilleurs individus de ces différentes populations sont très proches de la solution mais de façons différentes (elles ne le sont pas pour les même raisons, elles ont donc chacune un point fort à exploiter, l'objectif désormais est d'utiliser les crossover en espérant avoir le meilleur de chaque population).
+On pense qu'à ce stade, la solution est une combinaison de l'ensemble de ces individus.
 On décide donc de sélectionner les meilleurs individus de chaque population afin d'effectuer des crossover entre eux (mais on n'oublie pas également d'effectuer de très minimes mutations, en effet il se peut qu'un élément échappe à toutes  nos populations).
 
 ![Trace d’exécution de l'algorithme génétique en deux étapes.](image1.png)
