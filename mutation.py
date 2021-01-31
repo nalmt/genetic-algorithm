@@ -100,19 +100,23 @@ def mutateGenotype(genotype, mutateProbabity, addDeleteProbabilty):
     if random.random() < addDeleteProbabilty:
         rand = random.choice([1, 2])
         lenG = len(newGenotype)
-        #print("apres mutation",lenG)
+      #  print("apres mutation",lenG)
 
         if rand == 1:
             if lenG < 18:
                 added = addGene()
-                #print("adding gene", added)
+           #     print("adding gene", added)
                 newGenotype = newGenotype + added
 
         else:
             if lenG >= 13:
-                deleted = newGenotype[-1]
-                #print("deleting gene", deleted)
-                newGenotype = newGenotype[:-1]
+               # deleted = newGenotype[-1]
+              #  print("deleting gene", deleted)
+                #newGenotype = newGenotype[:-1]
+                index = random.randint(0, len(newGenotype) - 1)
+                newGenotype = newGenotype[:index] + newGenotype[index + 1:]
+
+
 
 
 
