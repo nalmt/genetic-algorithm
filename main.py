@@ -4,12 +4,15 @@ import subprocess
 from crossover import *
 from mutation import *
 from roulette import *
-
+import matplotlib.pyplot as plt
 STUDENT_ID = 11806768
-POPULATION_SIZE = 200
-CROSSOVER_PROBABILITY = 0.2
-MUTATE_PROBABILITY = 0.5
-ADD_DELETE_PROBABILITY = 0.2
+POPULATION_SIZE = 100
+CROSSOVER_PROBABILITY = 0.4
+MUTATE_PROBABILITY = 0.4
+ADD_DELETE_PROBABILITY = 0.1
+ELITES = 2
+
+generation = 0
 
 def check_list(student, list_password):
     proc = subprocess.Popen(["./unlock_mac", str(student)] + list_password, stdout=subprocess.PIPE)
@@ -44,30 +47,31 @@ def elitisme(population, n):
         indexbestfitness = weights[i]
         bestindividual = population[int(indexbestfitness)]
         elites.append(bestindividual)
-
     return elites
 
-
-
-
+def plotting(generation, bestfitness):
+    figure = plt.figure()
+    plt.plot(generation, bestfitness)
+    figure.suptitle('Best fitness by Generation')
+    ax = figure.add_subplot(1,1,1)
+    ax.set_xlabel('Generation')
+    ax.set_ylabel('Best fitness')
+    plt.show()
 
 while 1 not in check_list(STUDENT_ID, population):
     weights = check_list(STUDENT_ID, population)
-    newPopulation = []
     bestfitness= max(weights)
-
     print(bestfitness)
-
-    newPopulation.extend(elitisme(population, 2))
-
+    newPopulation = []
+    newPopulation.extend(elitisme(population,ELITES))
 
 
     while len(newPopulation) < POPULATION_SIZE:
         person_1, person_2 = roulette_wheel_by_exponential_rank_sampled(population, weights, 2, 0.35)
-        newPopulation.extend([person_1, person_2])
+        #person_1, person_2 = roulette_wheel_by_linear_rank(population, weights, 2)
 
         if random.random() < CROSSOVER_PROBABILITY:
-            person_3, person_4 = random_crossover(person_1, person_2, 8)
+            person_3, person_4 = random_crossover(person_1, person_2, 6)
             newPopulation.extend([person_3, person_4])
 
         person_5 = mutateGenotype(person_1, MUTATE_PROBABILITY, ADD_DELETE_PROBABILITY)
@@ -75,5 +79,8 @@ while 1 not in check_list(STUDENT_ID, population):
         newPopulation.extend([person_5, person_6])
 
     population = newPopulation
+    generation += 1
+    plotting(generation, bestfitness)
+
 
 print(population)
