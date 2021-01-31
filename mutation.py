@@ -5,8 +5,6 @@ import random
 
 alphabets = list(string.ascii_uppercase)
 numbers = list(range(10))
-mutateProbabity = 0.5
-addDeleteProbabilty = 0.2
 
 
 def addGene():
@@ -83,7 +81,7 @@ def mutate(gene):
             return gene
 
 
-def mutateGenotype(genotype):
+def mutateGenotype(genotype, mutateProbabity, addDeleteProbabilty):
     newGenotype=""
     for geneIndex in range(0, len(genotype)):
       #  print("iteration", geneIndex)
@@ -92,7 +90,7 @@ def mutateGenotype(genotype):
         #mutation
         if random.random() < mutateProbabity:
             newGene = str(mutate(gene))
-            print("mutating gene", gene, "To", newGene)
+            #print("mutating gene", gene, "To", newGene)
             newGenotype = newGenotype + newGene
         #sans mutation
         else:
@@ -102,18 +100,18 @@ def mutateGenotype(genotype):
     if random.random() < addDeleteProbabilty:
         rand = random.choice([1, 2])
         lenG = len(newGenotype)
-        print("apres mutation",lenG)
+        #print("apres mutation",lenG)
 
         if rand == 1:
             if lenG < 18:
                 added = addGene()
-                print("adding gene", added)
+                #print("adding gene", added)
                 newGenotype = newGenotype + added
 
         else:
             if lenG >= 13:
                 deleted = newGenotype[-1]
-                print("deleting gene", deleted)
+                #print("deleting gene", deleted)
                 newGenotype = newGenotype[:-1]
 
 
