@@ -111,9 +111,13 @@ def mutateGenotype(genotype, mutateProbabity, addDeleteProbabilty):
 
         else:
             if lenG >= 13:
-                deleted = newGenotype[-1]
+               # deleted = newGenotype[-1]
               #  print("deleting gene", deleted)
-                newGenotype = newGenotype[:-1]
+                #newGenotype = newGenotype[:-1]
+                index = random.randint(0, len(newGenotype) - 1)
+                newGenotype = newGenotype[:index] + newGenotype[index + 1:]
+
+
 
 
 
