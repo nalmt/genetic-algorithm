@@ -92,27 +92,29 @@ def mutateGenotype(genotype):
         #mutation
         if random.random() < mutateProbabity:
             newGene = str(mutate(gene))
-         #   print("mutating gene", gene, "To", newGene)
+            print("mutating gene", gene, "To", newGene)
             newGenotype = newGenotype + newGene
         #sans mutation
         else:
             newGenotype = newGenotype + gene
 
-        #ajout ou suppression de gene
-        if random.random() < addDeleteProbabilty:
-            rand = random.choice([1, 2])
-            lenG = len(newGenotype)
-            if rand == 1:
-                if lenG < 18:
-                    added = addGene()
-                    print("adding gene", added)
-                    newGenotype = newGenotype + added
+    #ajout ou suppression de gene
+    if random.random() < addDeleteProbabilty:
+        rand = random.choice([1, 2])
+        lenG = len(newGenotype)
+        print("apres mutation",lenG)
 
-            else:
-                if lenG >= 13:
-                    deleted = newGenotype[-1]
-                    print("deleting gene", deleted)
-                    newGenotype = newGenotype[:-1]
+        if rand == 1:
+            if lenG < 18:
+                added = addGene()
+                print("adding gene", added)
+                newGenotype = newGenotype + added
+
+        else:
+            if lenG >= 13:
+                deleted = newGenotype[-1]
+                print("deleting gene", deleted)
+                newGenotype = newGenotype[:-1]
 
 
 
