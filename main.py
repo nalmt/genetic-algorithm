@@ -47,7 +47,7 @@ for i in range(0, 100):
         newPopulation = []
 
         while len(newPopulation) < POPULATION_SIZE:
-            person_1, person_2 = roulette_wheel_by_exponential_rank_sampled(population, weights, 2, 0.7)
+            person_1, person_2 = roulette_wheel_by_exponential_rank_sampled(population, weights, 2, 0.4)
             #newPopulation.extend([person_1, person_2])
 
             if random.random() < 0.6:
@@ -91,7 +91,7 @@ while 1 not in check_list(STUDENT_ID, best_population):
     newPopulation = []
 
     while len(newPopulation) < POPULATION_SIZE:
-        person_1, person_2 = roulette_wheel_by_exponential_rank_sampled(best_population, weights, 2, 0.7)
+        person_1, person_2 = roulette_wheel_by_exponential_rank_sampled(best_population, weights, 2, 0.4)
         
         if random.random() < 0.8:
             person_3, person_4 = random_crossover(person_1, person_2, 1)
@@ -105,8 +105,8 @@ while 1 not in check_list(STUDENT_ID, best_population):
             newPopulation.extend([person_3, person_4, person_11, 
             person_12, person_13, person_14, person_15, person_16, person_17, person_18])
 
-        person_5 = mutateGenotype(person_1, 0.7, 0)
-        person_6 = mutateGenotype(person_2, 0.7, 0)
+        person_5 = mutateGenotype(person_1, 0.1, 0)
+        person_6 = mutateGenotype(person_2, 0.1, 0)
         person_7 = mutateGenotype(person_1, 0, 1)
         person_8 = mutateGenotype(person_2, 0, 1)
 
