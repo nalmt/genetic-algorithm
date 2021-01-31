@@ -1,64 +1,58 @@
 # coding : utf8
 # !/usr/bin/env python
-import random
 import string
 import random
 
-MUTATE_PROBABILITY = 0.2
-ADD_DELETE_PROBABILITY = 0.2
-
-alphabet = list(string.ascii_uppercase)
+alphabets = list(string.ascii_uppercase)
 numbers = list(range(10))
+mutateProbabity = 0.5
+addDeleteProbabilty = 0.2
 
-def deleteGene(geneIndex, genotype):
-    if len(genotype) >= 13:
-        return genotype[:geneIndex] + genotype[geneIndex + 1:]
 
-def addGene(genotype):
-    if len(genotype) <= 17:
-        rand = random.choice([1, 2])
-        if rand == 1:
-            randomAlphabet = random.choice(alphabet)
-            genotype.join(randomAlphabet)
-        else:
-            randomNumber = str(random.choice(numbers))
-            genotype.join(randomNumber)
-        return genotype
+def addGene():
+    rand = random.choice([1, 2])
+    if rand == 1:
+        randomAlphabet = random.choice(alphabets)
+        return randomAlphabet
+    else:
+        randomNumber = str(random.choice(numbers))
+        return randomNumber
 
 def mutate(gene):
 
-    if gene in alphabet:
-        indexAlpha = alphabet.index(gene)
+    if gene in alphabets:
+        indexAlpha = alphabets.index(gene)
 
         #si l'aphabet n'est ni Z ni A
         if indexAlpha not in [0, 25]:
             rand = random.choice([1, 2])
             if rand == 1:
                 #muter le gene vers l'alphabet suivant
-                return alphabet[indexAlpha + 1]
+                return alphabets[indexAlpha + 1]
             elif rand == 2:
                 # muter le gene vers l'alphabet précédent
-                return alphabet[indexAlpha - 1]
+                return alphabets[indexAlpha - 1]
 
         #si l'aphabet est un A
         elif indexAlpha == 0:
             rand = random.choice([1, 2])
             if rand == 1:
                 # muter le gene vers l'alphabet suivant (B)
-                return alphabet[1]
+                return alphabets[1]
             elif rand == 2:
-                # muter le gene vers l'alphabet précédent (Z)
-                return alphabet[25]
+                # muter le gene vers 9
+                return '9'
 
         # si l'aphabet est un Z
         elif indexAlpha == 25:
             rand = random.choice([1, 2])
             if rand == 1:
-                # muter le gene vers l'alphabet suivant (A)
-                return alphabet[0]
+                # muter le gene vers 0
+                return '0'
             elif rand == 2:
                 # muter le gene vers l'alphabet précédent (Y)
-                return alphabet[24]
+                return alphabets[24]
+
         else:
             return gene
 
@@ -70,39 +64,61 @@ def mutate(gene):
                 return gene + 1
             else:
                 return gene - 1
+
         elif gene == 0:
             rand = random.choice([1, 2])
             if rand == 1:
                 return 1
             else:
-                return 9
+                return 'Z'
+
         elif gene == 9:
             rand = random.choice([1, 2])
             if rand == 1:
-                return 0
+                return 'A'
             else:
                 return 8
+
         else:
             return gene
 
+
 def mutateGenotype(genotype):
-    for geneIndex in range(0, len(genotype) - 1):
-        if geneIndex in range(0, len(genotype) - 1):
-            gene = genotype[geneIndex]
+    newGenotype=""
+    for geneIndex in range(0, len(genotype)):
+      #  print("iteration", geneIndex)
+        gene = genotype[geneIndex]
 
-            if random.random() < MUTATE_PROBABILITY:
-                newGene = str(mutate(gene))
-                genotype = genotype[:geneIndex] + str(newGene) + genotype[geneIndex + 1:]
+        #mutation
+        if random.random() < mutateProbabity:
+            newGene = str(mutate(gene))
+         #   print("mutating gene", gene, "To", newGene)
+            newGenotype = newGenotype + newGene
+        #sans mutation
+        else:
+            newGenotype = newGenotype + gene
 
-            if random.random() < ADD_DELETE_PROBABILITY:
-                deleteIndex = random.randrange(0, len(genotype) - 1, 1)
-                rand = random.choice([1, 2])
-                if rand == 1:
-                    genotype = addGene(genotype)
-                else:
-                    genotype = deleteGene(deleteIndex, genotype)
+        #ajout ou suppression de gene
+        if random.random() < addDeleteProbabilty:
+            rand = random.choice([1, 2])
+            lenG = len(newGenotype)
+            if rand == 1:
+                if lenG < 18:
+                    added = addGene()
+                    print("adding gene", added)
+                    newGenotype = newGenotype + added
 
-    return genotype
+            else:
+                if lenG >= 13:
+                    deleted = newGenotype[-1]
+                    print("deleting gene", deleted)
+                    newGenotype = newGenotype[:-1]
 
-# Ensuite on a une probabilité de supprimer un gène au hasard et une probabilité d'ajouter un gène 
-# au hasard (ces types de mutations s'appliquent uniquement si nous avons 13 à 17 gènes inclus).
+
+
+
+    return newGenotype
+
+
+
+
