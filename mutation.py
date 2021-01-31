@@ -5,8 +5,7 @@ import random
 
 alphabets = list(string.ascii_uppercase)
 numbers = list(range(10))
-mutateProbabity = 0.5
-addDeleteProbabilty = 0.2
+
 
 
 def addGene():
@@ -83,7 +82,7 @@ def mutate(gene):
             return gene
 
 
-def mutateGenotype(genotype):
+def mutateGenotype(genotype, mutateProbabity, addDeleteProbabilty):
     newGenotype=""
     for geneIndex in range(0, len(genotype)):
       #  print("iteration", geneIndex)
